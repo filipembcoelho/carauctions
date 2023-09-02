@@ -22,7 +22,7 @@ public static class DbInitializer
             return;
         }
 
-        List<Auction> auctions = GetAuctions();
+        var auctions = GetAuctions();
 
         context.AddRange(auctions);
         context.SaveChanges();
@@ -30,7 +30,7 @@ public static class DbInitializer
 
     private static List<Auction> GetAuctions()
     {
-        return new List<Auction>()
+        return new List<Auction>
         {
             new()
             {

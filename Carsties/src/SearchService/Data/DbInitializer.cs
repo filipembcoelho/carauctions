@@ -1,4 +1,3 @@
-using System.Text.Json;
 using MongoDB.Driver;
 using MongoDB.Entities;
 using SearchService.Models;
@@ -29,9 +28,6 @@ public class DbInitializer
 
         Console.WriteLine($"{items.Count} returned from the auction service");
 
-        if (items.Count > 0)
-        {
-            await DB.SaveAsync(items);
-        }
+        if (items.Count > 0) await DB.SaveAsync(items);
     }
 }

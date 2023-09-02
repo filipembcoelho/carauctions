@@ -1,5 +1,3 @@
-using AuctionService.Entities;
-
 namespace AuctionService.DTOs;
 
 public class AuctionDto

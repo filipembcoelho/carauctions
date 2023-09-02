@@ -27,9 +27,7 @@ public class AuctionsController : ControllerBase
         var query = _context.Auctions.OrderBy(x => x.Item.Make).AsQueryable();
 
         if (!string.IsNullOrEmpty(date))
-        {
             query = query.Where(x => x.UpdatedAt.CompareTo(DateTime.Parse(date).ToUniversalTime()) > 0);
-        }
 
         return await query.ProjectTo<AuctionDto>(_mapper.ConfigurationProvider).ToListAsync();
     }
@@ -41,10 +39,7 @@ public class AuctionsController : ControllerBase
             .Include(x => x.Item)
             .FirstOrDefaultAsync(x => x.Id == id);
 
-        if (auction is null)
-        {
-            return NotFound();
-        }
+        if (auction is null) return NotFound();
 
         return _mapper.Map<AuctionDto>(auction);
     }
@@ -60,10 +55,7 @@ public class AuctionsController : ControllerBase
         _context.Auctions.Add(auction);
         var result = await _context.SaveChangesAsync() > 0;
 
-        if (!result)
-        {
-            return BadRequest("Could not save changes to the DB");
-        }
+        if (!result) return BadRequest("Could not save changes to the DB");
 
         return CreatedAtAction(nameof(GetAuctionById), new { auction.Id },
             _mapper.Map<AuctionDto>(auction));
@@ -75,10 +67,7 @@ public class AuctionsController : ControllerBase
         var auction = await _context.Auctions.Include(x => x.Item)
             .FirstOrDefaultAsync(x => x.Id == id);
 
-        if (auction is null)
-        {
-            return NotFound();
-        }
+        if (auction is null) return NotFound();
 
         // TODO: Check seller == username
         auction.Item.Make = updateAuctionDto.Make ?? auction.Item.Make;
@@ -89,10 +78,7 @@ public class AuctionsController : ControllerBase
 
         var result = await _context.SaveChangesAsync() > 0;
 
-        if (!result)
-        {
-            return BadRequest("Problem saving changes");
-        }
+        if (!result) return BadRequest("Problem saving changes");
 
         return Ok();
     }
@@ -102,19 +88,13 @@ public class AuctionsController : ControllerBase
     {
         var auction = await _context.Auctions.FindAsync(id);
 
-        if (auction is null)
-        {
-            return NotFound();
-        }
+        if (auction is null) return NotFound();
 
         // TODO: Check seller == username
         _context.Auctions.Remove(auction);
         var result = await _context.SaveChangesAsync() > 0;
 
-        if (!result)
-        {
-            return BadRequest("Could not update DB");
-        }
+        if (!result) return BadRequest("Could not update DB");
 
         return Ok();
     }

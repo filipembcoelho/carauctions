@@ -1,14 +1,12 @@
-using System.Globalization;
 using MongoDB.Entities;
-using SearchService.Data;
 using SearchService.Models;
 
 namespace SearchService.Services;
 
 public class AuctionsHttpClient
 {
-    private readonly HttpClient _httpClient;
     private readonly IConfiguration _config;
+    private readonly HttpClient _httpClient;
 
     public AuctionsHttpClient(HttpClient httpClient, IConfiguration config)
     {

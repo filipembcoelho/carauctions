@@ -1,11 +1,7 @@
 using System.Net;
-using Microsoft.VisualBasic;
-using MongoDB.Driver;
-using MongoDB.Entities;
 using Polly;
 using Polly.Extensions.Http;
 using SearchService.Data;
-using SearchService.Models;
 using SearchService.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,7 +34,9 @@ app.Lifetime.ApplicationStarted.Register(async () =>
 
 app.Run();
 
-static IAsyncPolicy<HttpResponseMessage> GetPolicy() =>
-    HttpPolicyExtensions.HandleTransientHttpError()
+static IAsyncPolicy<HttpResponseMessage> GetPolicy()
+{
+    return HttpPolicyExtensions.HandleTransientHttpError()
         .OrResult(msg => msg.StatusCode == HttpStatusCode.NotFound)
         .WaitAndRetryForeverAsync(_ => TimeSpan.FromSeconds(3));
+}
