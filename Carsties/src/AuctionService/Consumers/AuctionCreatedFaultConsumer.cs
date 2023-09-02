@@ -7,6 +7,7 @@ public class AuctionCreatedFaultConsumer : IConsumer<Fault<AuctionCreated>>
 {
     public async Task Consume(ConsumeContext<Fault<AuctionCreated>> context)
     {
+        // An example if Error is thrown if model is Foo (AuctionCreatedConsumer)
         Console.WriteLine("--> Consuming Faulty creation");
         var exception = context.Message.Exceptions.First();
 
