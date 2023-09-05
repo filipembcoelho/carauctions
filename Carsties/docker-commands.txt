@@ -5,3 +5,7 @@ docker build -f src/AuctionService/Dockerfile -t testing123 .
 docker run testing123
 
 docker compose build auction-svc
+docker compose build search-svc
+docker compose build identity-svc
+
+docker compose up -d
