@@ -7,15 +7,23 @@ docker run testing123
 docker compose build auction-svc
 docker compose build search-svc
 docker compose build identity-svc
+docker compose build gateway-svc
 
 docker compose up -d
+
+## If changes on service rebuild the service
+docker compose build {{service}}-svc
+docker compose up -d
+
+## Reset docker container
+docker compose down
+docker compose up -d
+
 
 ## Locate docker internal IP
 docker network ls // List all networks
 
-
 docker network inspect <name_of_network> -f "{{ (index .IPAM.Config 0).Gateway }}" // Inspect
-
 E.g.:
 docker network inspect carsties_default -f "{{ (index .IPAM.Config 0).Gateway }}" // list the IPAddress
 
