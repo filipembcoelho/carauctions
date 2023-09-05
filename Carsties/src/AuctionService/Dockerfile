@@ -20,7 +20,7 @@ COPY src/Contracts src/Contracts
 WORKDIR /app/src/AuctionService
 RUN dotnet publish -c Release -o /app/src/out
 
-# Build runtime iamge
+# Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
 COPY --from=build /app/src/out .
